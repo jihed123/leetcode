@@ -14,16 +14,39 @@ use std::collections::HashSet;
 //     }
 //     false
 // }
+// pub fn is_anagram(s: String, t: String) -> bool {
+//     let mut hashset = HashSet::<char>::new();
+//     hashset.extend(s.chars());
+//     let mut hashset2 = HashSet::<char>::new();
+//     hashset2.extend(t.chars());
+
+//     // let result: Vec<char> = hashset.difference(&hashset2).cloned().collect();
+//     let result: Vec<char> = hashset.symmetric_difference(&hashset2).cloned().collect();
+
+//     return result.is_empty();
+// }
 pub fn is_anagram(s: String, t: String) -> bool {
-    let mut hashset = HashSet::<char>::new();
-    hashset.extend(s.chars());
-    let mut hashset2 = HashSet::<char>::new();
-    hashset2.extend(t.chars());
+    let mut s_sorted: Vec<char> = s.chars().collect::<Vec<char>>();
+    let mut t_sorted: Vec<char> = t.chars().collect::<Vec<char>>();
+    if s_sorted.len() != t_sorted.len() {
+        return false;
+    }
 
-    // let result: Vec<char> = hashset.difference(&hashset2).cloned().collect();
-    let result: Vec<char> = hashset.symmetric_difference(&hashset2).cloned().collect();
+    s_sorted.sort_unstable();
+    t_sorted.sort_unstable();
 
-    return result.is_empty();
+    for i in 0..s_sorted.len() {
+        // print!("{}-{}", t_sorted[i], s_sorted[i]);
+        // dbg!("{}-{}", t_sorted[i], s_sorted[i]);
+        if s_sorted[i] != t_sorted[i] {
+            return false;
+        }
+    }
+    // print!("ye");
+
+    return true;
+    // 2.60MB Beats 9.07%of users with Rust
+    // 0ms
 }
 fn main() {
     println!("Hello, world!");
