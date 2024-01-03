@@ -1,49 +1,68 @@
-// use crate::hash_map::HashMap;
+// use std::collections::HashMap;
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_imports)]
+#![allow(unused_mut)]
 use std::collections::HashMap;
 
-#[allow(dead_code)]
-#[allow(unused_variables)]
-#[allow(unused_imports)]
-
-pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut index: usize = 0;
-    let mut localindex: usize = 1;
-    let len: usize = nums.len();
-    loop {
-        if index == len {
-            return vec![0, 0];
-        }
-        while localindex < len {
-            if index == localindex {
-                localindex += 1;
-                continue;
-            }
-            if nums[index] + nums[localindex] == target {
-                return vec![index as i32, localindex as i32];
-            }
-            localindex += 1;
-        }
-
-        index += 1;
-        localindex = 0;
-    }
-
-    // let val = nums[i] * nums[i + 1];
-
-    // let val = nums[i] * nums[i + 1];
-    // basically i need to do this untill there is none on the list then progress on the list
-
-    // hash_map.insert(i as i32, nums[i] * nums[i]);
-
-    // println!("keys: {:?}", hash_map.keys().cloned().collect::<Vec<i32>>());
-    // println!(
-    //     "values : {:?}",
-    //     hash_map.values().cloned().collect::<Vec<i32>>()
-    // );
-}
 fn main() {
     println!("Hello, world!");
 }
+
+pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    // after that i saw heap would be the solution i will try it out
+
+    return Vec::new();
+}
+
+// ai solution
+// pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+//     if nums.len() == k as usize {
+//         return nums;
+//     }
+
+//     use std::collections::HashMap;
+//     let mut hashmap: HashMap<i32, i32> = HashMap::with_capacity(nums.len());
+//     for i in 0..nums.len() {
+//         *hashmap.entry(nums[i]).or_insert(0) += 1;
+//     }
+
+//     let mut pairs: Vec<_> = hashmap.into_iter().collect();
+//     pairs.sort_by_key(|&(_, count)| std::cmp::Reverse(count));
+
+//     pairs
+//         .into_iter()
+//         .map(|(num, _)| num)
+//         .take(k as usize)
+//         .collect()
+
+// let mut newvec: Vec<i32> = Vec::with_capacity(k as usize);
+// let mut newvec: Vec<i32> = hashmap.values().cloned().collect();
+// newvec.sort();
+// newvec.truncate(k as usize);
+
+// let mut result: Vec<i32> = Vec::with_capacity(k as usize);
+// for value_to_find in newvec {
+//     for (key, value) in &hashmap {
+//         if value == &value_to_find {
+//             result.push(*key);
+//         }
+//     }
+// }
+
+// order by values then get key by value then add to vec and send it
+
+// dbg!(hashmap.keys());
+// dbg!(hashmap.values());
+
+// let vec1: Vec<_> = hashmap.values().collect();
+// dbg!("val", vec1);
+
+// make the hashmap have pointer value to it usize then make a few array with it.
+
+// dbg!("{}", hashmap.keys(), hashmap.values());
+// i have to give the two+ highest.
+// }
 
 #[cfg(test)]
 mod tests {
@@ -53,14 +72,9 @@ mod tests {
 
     #[test]
     fn test_1() {
-        let nums: Vec<i32> = [2, 7, 11, 15].to_vec();
-        let target: i32 = 9;
-        // get the index of two number that add up to it
-        let result: Vec<i32> = two_sum(nums.clone(), target);
-
-        let index1: usize = result[0] as usize;
-        let index2: usize = result[1] as usize;
-        let realvalue = nums[index1] + nums[index2];
-        assert_eq!(realvalue, target);
+        let nums = vec![1, 1, 1, 2, 2, 3];
+        let k = 2;
+        let res = top_k_frequent(nums, k);
+        assert_eq!(res, vec![1, 2]);
     }
 }
