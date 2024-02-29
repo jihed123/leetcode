@@ -14,13 +14,12 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
 
     for string in strs {
         if result.is_empty() {
-            let mut temp_vec: Vec<String> = Vec::new();
-            temp_vec.push(string);
-            result.push(temp_vec);
+            result.push(vec![string]);
         } else {
             let mut group_index: i16 = -1;
             // fix the cloning cost
-            for group in result.clone() {
+            let mut found_string = false;
+            for group in &mut result {
                 group_index += 1;
                 // maybe i can find a way to cache this (in another array to win time for redendences)
                 let mut characters: Vec<char> = group[0].chars().collect();
@@ -28,21 +27,15 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
                 let mut string_sorted: Vec<char> = string.clone().chars().collect();
                 string_sorted.sort_unstable();
                 let mut string_index: i8 = -1;
-                let mut found_string = true;
-                for char in characters {
-                    string_index += 1;
-                    if char != string_sorted[string_index as usize] {
-                        found_string = false;
-                        break;
-                    }
+
+                if characters == string_sorted {
+                    group.push(string.clone());
+                    found_string = true;
+                    break;
                 }
-                if found_string {
-                    result[group_index as usize].push(string.clone());
-                } else {
-                    let mut temp_vec: Vec<String> = Vec::new();
-                    temp_vec.push(string.clone());
-                    result.push(temp_vec);
-                }
+            }
+            if !found_string {
+                result.push(vec![string]);
             }
         }
     }
