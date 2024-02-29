@@ -6,13 +6,12 @@
 use core::num;
 // use std::collections::{hash_set, BinaryHeap, HashMap};
 // 169. Majority Element
-
 fn main() {
     println!("Hello, world!");
 }
 pub fn majority_element(nums: Vec<i32>) -> i32 {
-    let mut numbers: std::collections::HashMap<i32, u8> = std::collections::HashMap::new();
-    let mut biggest_number: u8;
+    let mut numbers: std::collections::HashMap<i32, usize> =
+        std::collections::HashMap::with_capacity(nums.len());
     let mut found: bool = false;
     let halfsize: usize = nums.len() / 2;
     let mut solution: i32 = 0;
@@ -25,7 +24,7 @@ pub fn majority_element(nums: Vec<i32>) -> i32 {
         }
         numbers
             .entry(x)
-            .and_modify(|e: &mut u8| {
+            .and_modify(|e: &mut usize| {
                 *e += 1;
                 if *e as usize >= halfsize {
                     found = true;
